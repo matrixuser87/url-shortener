@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+
+  backend:
+    build: backend
+    container_name: url-shortener-backend
+    environment:
+      - JVM_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9000
+      - ENV=default
+      - DB_URL=jdbc:mysql://url-shortener-mariadb:3306/bobi?useSSL=false
+      - DB_USERNAME=bobi
+      - DB_PASSWORD=bobi
+      - RABBITMQ_HOST=url-shortener-rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+    ports:
+      - '8080:8080'
+      - '9000:9000'
+    depends_on:
+      - database
+      - rabbitmq
+
+  database:
+    image: url-shortener-mariadb
+    build: database
+    container_name: url-shortener-mariadb
+    ports:
+      - '3306:3306'
+
+  rabbitmq:
+    image: url-shortener-rabbitmq
+    build: rabbitmq
+    container_name: url-shortener-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
