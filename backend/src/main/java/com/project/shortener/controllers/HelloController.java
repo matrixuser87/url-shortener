@@ -37,7 +37,7 @@ public class HelloController {
         List<User> all = userRepository.findAll();
         all.forEach(System.out::println);
         messageProducer.produce();
-        return "Greetings from Spring Boot!";
+        return "Greetings from Springsdf Boot!";
     }
 
     @GetMapping("/jwttest")

@@ -25,4 +25,5 @@ public class Message {
     private UUID id;
     private String msg;
     private LocalDateTime date;
+    private int a;
 }
